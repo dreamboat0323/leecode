@@ -1,0 +1,64 @@
+#include <iostream>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+using namespace std;
+class Solution {
+    bool findmid(vector<int>& nums,int l,int r,int val){
+        while(l<r){
+            int mid=(l+r)/2;
+            if(nums[mid]==val)
+            return true;
+            else if(val<nums[mid])
+            r=mid-1;
+            else
+            l=mid+1;
+        }
+        return false;
+    }
+    int linerfind(vector<int> nums,int l,int r,int val){
+        for(int i=l;i<=r;i++){
+            if(nums[i]==val)
+            return i;
+        }
+        return -1;
+    }
+public:
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+        vector<int> copy(nums);
+        sort(copy.begin(),copy.end());
+        int i=0,j=0,x;
+        for(i=0;i<nums.size();i++)
+        {
+            x=copy[i];
+            if(findmid(copy,i+1,copy.size(),target-x)){
+                break;
+            }
+        }
+        int a=linerfind(nums,0,nums.size(),x);
+        int b=linerfind(nums,a+1,nums.size(),target-x);
+        if(b==-1)
+        b=linerfind(nums,0,a-1,target-x);
+        if(a>=b)
+        swap(a,b);
+        return {a,b};
+    }
+};
+int main()
+{
+    Solution T;
+    int n=0,target=0;
+    cin>>n>>target;
+    vector<int> nums(n);
+    vector<int> temp(2);
+    for(int i=0;i<n;i++)
+        {
+            int j=0;
+            cin>>j;
+            nums[i]=j;  
+        }
+   temp=T.twoSum(nums,target);
+    cout<<"["<<temp[0]<<","<<temp[1]<<"]";
+    system("pause");
+}
