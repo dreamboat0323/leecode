@@ -1,0 +1,40 @@
+#include <iostream>
+#include<map>
+#include<vector>
+#include<algorithm>
+using namespace std;
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+        unordered_map<int,int> has;
+        int n=nums.size();
+        for(int i=n-1;i>=0;i--){
+            if(has.find(target-nums[i])!=has.end()){
+                return {has[target-nums[i]],i};
+            }
+            has[nums[i]]=i;
+        }
+        return {};
+    }
+};
+int main()
+{
+    Solution T;
+    int n=0,target=0;
+    cin>>n>>target;
+    vector<int> nums(n);
+    vector<int> temp(2);
+    for(int i=0;i<n;i++)
+        {
+            int j=0;
+            cin>>j;
+            nums[i]=j;  
+        }
+   temp=T.twoSum(nums,target);
+   if(temp.size()==0)
+   cout<<-1;
+   else
+    cout<<"["<<temp[0]<<","<<temp[1]<<"]";
+    system("pause");
+}
